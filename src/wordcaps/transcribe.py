@@ -103,14 +103,24 @@ class FasterWhisper:
             raise WordcapsError(
                 "faster-whisper is not installed: pip install 'wordcaps[faster-whisper]'"
             ) from e
-        self._model = WhisperModel(model, device=device, compute_type=compute_type)
+        try:
+            self._model = WhisperModel(model, device=device, compute_type=compute_type)
+        except Exception as e:
+            # download or load failures (offline, proxy, unknown model name) surface
+            # from huggingface_hub/ctranslate2 as arbitrary exceptions
+            raise WordcapsError(
+                f"faster-whisper could not load model '{model}': {e}\n"
+                "check the model name and your connection (the first run downloads it)"
+            ) from e
 
     def transcribe(self, wav: Path, language: str | None) -> list[Word]:
         segments, _ = self._model.transcribe(str(wav), language=language, word_timestamps=True)
-        return [
-            Word(w.word.strip(), float(w.start), float(w.end))
-            for seg in segments for w in (seg.words or []) if w.word.strip()
-        ]
+        # same convention as whisper.cpp: no leading space means the piece
+        # continues the previous word ("word" + "-by" + "-word")
+        return merge_tokens([
+            (float(w.start), float(w.end), w.word)
+            for seg in segments for w in (seg.words or [])
+        ])
 
 
 def get_backend(name: str = "auto", model: str = "base") -> Backend:

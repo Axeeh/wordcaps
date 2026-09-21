@@ -15,6 +15,45 @@ def test_merge_tokens_joins_subwords_and_drops_tags():
         ("Ciao", 0.0, 0.2), ("fighissima!", 0.2, 0.9), ("ok", 1.0, 1.2)]
 
 
+def test_faster_whisper_load_failure_is_actionable(monkeypatch):
+    import sys
+    import types
+
+    from wordcaps.models import WordcapsError
+    from wordcaps.transcribe import FasterWhisper
+
+    def fail(*args, **kwargs):
+        raise OSError("403 Forbidden")
+
+    monkeypatch.setitem(sys.modules, "faster_whisper", types.SimpleNamespace(WhisperModel=fail))
+    with pytest.raises(WordcapsError, match="could not load model 'base'"):
+        FasterWhisper("base")
+
+
+def test_faster_whisper_joins_hyphenated_pieces(monkeypatch):
+    import sys
+    import types
+
+    from wordcaps.transcribe import FasterWhisper
+
+    W = types.SimpleNamespace
+    pieces = [(" how", 0.0, 0.2), (" word", 0.2, 0.4), ("-by", 0.4, 0.6),
+              ("-word", 0.6, 0.8), (" captions", 0.8, 1.2)]
+
+    class Model:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def transcribe(self, *args, **kwargs):
+            seg = W(words=[W(word=t, start=s, end=e) for t, s, e in pieces])
+            return [seg], None
+
+    monkeypatch.setitem(sys.modules, "faster_whisper", W(WhisperModel=Model))
+    words = FasterWhisper("base").transcribe(Path("x.wav"), "en")
+    assert [(w.text, w.start, w.end) for w in words] == [
+        ("how", 0.0, 0.2), ("word-by-word", 0.2, 0.8), ("captions", 0.8, 1.2)]
+
+
 @pytest.mark.whisper
 @pytest.mark.skipif(not os.environ.get("WORDCAPS_TEST_MODEL") or not shutil.which("say"),
                     reason="set WORDCAPS_TEST_MODEL to a ggml model (macOS only: uses `say`)")

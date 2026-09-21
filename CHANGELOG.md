@@ -6,6 +6,13 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- faster-whisper backend: hyphenated words ("word-by-word") are joined into one
+  word instead of being split into pieces across captions.
+- faster-whisper backend: a model that cannot be downloaded or loaded now gives
+  a short, actionable error instead of a Python traceback.
+
 ## [0.1.0] - 2026-09-21
 
 ### Added
