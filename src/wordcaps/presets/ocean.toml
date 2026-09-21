@@ -1,0 +1,18 @@
+# Smaller two-line captions with a sky-blue highlight. Measured from a
+# published reel: 42 px caps on a 1080 px frame, baseline at 1290 px.
+description = "Vertical, compact two-line captions with a blue highlight"
+font = "montserrat-extrabold"
+size = 0.039
+uppercase = true
+color = "#FFFFFF"
+highlight = "#33A9F4"
+highlight_mode = "color"
+box_text_color = "#FFFFFF"
+stroke = 0.14
+shadow_offset = 0.14
+baseline = 0.672
+line_spacing = 1.9
+max_width = 0.685
+max_words = 4
+max_chars = 24
+fade_in = 0.13

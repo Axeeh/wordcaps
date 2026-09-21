@@ -1,0 +1,16 @@
+# The spoken word sits on a colored box, with a small pop.
+description = "Vertical: spoken word on a colored box with a pop"
+font = "montserrat-black"
+size = 0.058
+uppercase = true
+color = "#FFFFFF"
+highlight = "#7C3AED"
+highlight_mode = "box"
+box_text_color = "#FFFFFF"
+stroke = 0.12
+baseline = 0.70
+line_spacing = 1.35
+max_width = 0.80
+max_words = 3
+max_chars = 20
+pop_scale = 1.08

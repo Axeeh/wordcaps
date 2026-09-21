@@ -1,0 +1,15 @@
+# Vertical short-form video (Reels, Shorts, TikTok): big bold caps,
+# three words at a time, the spoken word turns yellow.
+description = "Vertical reels and shorts: bold caps, yellow karaoke highlight"
+font = "montserrat-black"
+size = 0.058
+uppercase = true
+color = "#FFFFFF"
+highlight = "#FFDD00"
+highlight_mode = "color"
+stroke = 0.14
+baseline = 0.70
+line_spacing = 1.25
+max_width = 0.80
+max_words = 3
+max_chars = 22

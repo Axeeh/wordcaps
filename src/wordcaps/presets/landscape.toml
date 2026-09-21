@@ -1,0 +1,17 @@
+# Horizontal video (YouTube, courses, interviews): sentence case, longer
+# lines at the bottom of the frame, punctuation kept.
+description = "Horizontal 16:9: sentence case, lower third, longer lines"
+font = "montserrat-extrabold"
+size = 0.032
+uppercase = false
+strip_punctuation = false
+color = "#FFFFFF"
+highlight = "#FFDD00"
+highlight_mode = "color"
+stroke = 0.12
+baseline = 0.90
+line_spacing = 1.3
+max_width = 0.70
+max_words = 8
+max_chars = 42
+max_pause = 0.5

@@ -1,0 +1,12 @@
+# A custom style: start from a preset and change only what you need.
+#   wordcaps burn video.mp4 --style examples/brand.toml
+extends = "reel"
+
+highlight = "#FF4D8D"
+highlight_mode = "box"
+box_text_color = "#FFFFFF"
+max_words = 2
+baseline = 0.62
+
+# words that get a colored box and a bouncy pop when spoken
+emphasis = ["OFFLINE", "COOL"]

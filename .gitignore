@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# Virtual environments (.venv may be a symlink to .venv.nosync, kept out of iCloud)
+.venv
+.venv/
+.venv.nosync/
+
+# Local test media and outputs
+*.captioned.*
+*.captions.mov
+preview.png
+*.sheet.jpg
+
+.DS_Store
